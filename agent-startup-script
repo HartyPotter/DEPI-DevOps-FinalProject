@@ -2,7 +2,7 @@
 
 # 1. Generate SSH Key
 echo "Generating SSH key..."
-ssh-keygen -f ~/.ssh/docker-agent -N "" <<< y >/dev/null 2>&1
+ssh-keygen -t rsa -m PEM -f ~/.ssh/docker-agent -N "" <<< y >/dev/null 2>&1
 
 # 2. Output the private key
 echo "Private Key:"
@@ -10,14 +10,12 @@ cat ~/.ssh/docker-agent
 
 # 3. Build the Docker image
 echo "Building Docker image..."
-cd proj
-docker build --no-cache -t docker-agent-image .
+docker build -t docker-agent-debian .
 
 # 4. Run the Docker container with the public key
-PUBLIC_KEY=$(cat /root/.ssh/docker-agent.pub)
+PUBLIC_KEY=$(cat ~/.ssh/docker-agent.pub)
 
 echo "Running Docker container with the public key..."
-docker run -td --privileged -p 7777:22 --name docker-agent -v /var/run/docker.sock:/var/run/docker.sock \
-       -e "JENKINS_AGENT_SSH_PUBKEY=${PUBLIC_KEY}" docker-agent-image
+docker run -td --privileged -p 7777:22 --name docker-agent -e "JENKINS_AGENT_SSH_PUBKEY=${PUBLIC_KEY}" docker-agent-debian
 
 echo "Jnekins Docker agent started."
