@@ -1,5 +1,13 @@
 # DevOps Project: Jenkins Pipeline
 
+Contributers:
+1. Youssef Elharty
+2. Peter Fayez
+3. Ahmed Abdelkader
+4. Mohamed Ayman
+
+Group code: ALX1_SWD1_M2d
+
 We started by building the Jenkins pipeline (attached in the repo). Here is a breakdown of the file:
 The Jenkins file started first by defining the environment variables that we will be using. The variables are as follows:
 - Docker Hub Username
